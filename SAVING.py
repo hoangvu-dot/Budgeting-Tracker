@@ -29,11 +29,12 @@ class SavingObjects:
     @check_payment.setter
     def check_payment(self,payment):
         if(type(payment) == type("Strings") and payment.lower() in ["cash", "credit", "others"]):
+            self._payment = payment
+
             if(payment.lower() == "others"):
                 new_pay = input("Payments: ")
                 self._payment = new_pay
-
-            self._payment = payment
+                        
         else:
             raise TypeError("Please input a legit payment")
         
@@ -58,5 +59,5 @@ class SavingObjects:
     
 def main():
     day1 = SavingObjects.collect_Info()
-
+    print(day1)
 main()
