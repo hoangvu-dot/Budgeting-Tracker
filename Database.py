@@ -2,7 +2,7 @@ import mysql.connector
 from SAVING import take_value
 
 
-def create_database(mycursor):
+def create_database(date, payment, cost, product):
     try:
         mycursor.execute(
             "CREATE TABLE Trackers (Date VARCHAR(255), Payment VARCHAR(50), Cost int UNSIGNED, Product VARCHAR(255), id int PRIMARY KEY AUTO_INCREMENT)"
@@ -10,35 +10,32 @@ def create_database(mycursor):
     except:
         mycursor.execute(
             "INSERT INTO Trackers (Date, Payment, Cost, Product) VALUES (%s, %s, %s, %s)",
-            take_value(),
+            take_value(date, payment, cost, product),
         )
+        mydb.commit()
     else:
         mycursor.execute(
             "INSERT INTO Trackers (Date, Payment, Cost, Product) VALUES (%s, %s, %s, %s)",
-            take_value(),
+            take_value(date, payment, cost, product),
         )
+        mydb.commit()
+        
 
-
-def delete_data(mycursor):
-    mycursor.execute(f"DELETE FROM Trackers WHERE id ORDER BY id DESC LIMIT 1")
-
-
-def main():
-    mydb = mysql.connector.connect(
-        host="localhost", user="root", password="root", database="project_database"
-    )
-
-    input = "0"
-    mycursor = mydb.cursor()
-
-    # 1 for Create & 0 for delete
-
-    mydb.commit()
-
+def show_data():
     mycursor.execute("SELECT * from Trackers")
-
     for x in mycursor:
         print(x)
+    
+
+def delete_data():
+    mycursor.execute(f"DELETE FROM Trackers WHERE id ORDER BY id DESC LIMIT 1")
+    mydb.commit()
 
 
-main()
+mydb = mysql.connector.connect(
+    host="localhost", user="root", password="root", database="project_database"
+)
+mycursor = mydb.cursor()
+
+
+
