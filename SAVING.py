@@ -52,6 +52,6 @@ class SavingObjects:
 
 
 def take_value(date, payment, cost, product):
-    day1 = SavingObjects(date, payment, cost, product)
-    value = day1.variables()
+    today = SavingObjects(date, payment, cost, product)
+    value = today.variables()
     return value
