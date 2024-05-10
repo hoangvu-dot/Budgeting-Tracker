@@ -7,10 +7,11 @@ from streamlit_extras.metric_cards import style_metric_cards
 
 st.set_page_config(layout="wide")
 
+
 with st.sidebar:
     st.title("💵 Budgeting Tracker")
 
-    box_date = st.text_input("What's the date today: ")
+    box_date = st.date_input("What's the date today: ", value= None, format='DD/MM/YYYY')
     box_payment = st.text_input("What's the payment method: ")
     box_cost = st.number_input(
         "How much does it cost: ", value=None, placeholder="Type a number..."
@@ -22,13 +23,15 @@ with st.sidebar:
         st.button(
             "Another Spending day 🥲",
             on_click=create_databases,
-            args=(box_date, box_payment, box_cost, box_product),
+            args=(f"{box_date}", box_payment, box_cost, box_product),
         )
     with col[1]:
         st.button(
             "Undo",
             on_click=delete_data,
         )
+    st.button("Save & Reset this month record", on_click= reset_month)
+    
 
 col1, col2, col3 = st.columns(3, gap="medium")
 with col1:
