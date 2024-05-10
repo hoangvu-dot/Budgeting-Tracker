@@ -2,6 +2,7 @@ import mysql.connector
 from SAVING import take_value
 import numpy as np
 
+
 def create_databases(date, payment, cost, product):
     try:
         mycursor.execute(
@@ -13,20 +14,24 @@ def create_databases(date, payment, cost, product):
             take_value(date, payment, cost, product),
         )
         mydb.commit()
-        
+
+
 def show_data():
     mycursor.execute("SELECT * from Trackers")
     for x in mycursor:
         print(x)
-        
+
+
 def retrieve_data():
     mycursor.execute("SELECT * from Trackers")
     lst = [x for x in mycursor]
     return lst
 
+
 def delete_data():
     mycursor.execute(f"DELETE FROM Trackers WHERE id ORDER BY id DESC LIMIT 1")
     mydb.commit()
+
 
 def monthly_spend() -> int:
     mycursor.execute("SELECT Cost from Trackers")
@@ -35,15 +40,16 @@ def monthly_spend() -> int:
         total += x[0]
     return total
 
+
 def unique_item():
     mycursor.execute("SELECT Product from Trackers")
     item = {}
     for x in mycursor:
-        if x not in item:
-            item[x] = 1
+        if x[0] not in item:
+            item[x[0]] = 1
         else:
-            item[x] += 1
-    
+            item[x[0]] += 1
+
     number_transaction = len(retrieve_data())
     for x in item:
         item[x] /= number_transaction
@@ -53,10 +59,7 @@ def unique_item():
 
 
 mydb = mysql.connector.connect(
-    host="localhost", 
-    user="root", 
-    password="root", 
-    database="project_database"
+    host="localhost", user="root", password="root", database="project_database"
 )
 mycursor = mydb.cursor()
 
@@ -65,11 +68,11 @@ mycursor.execute("TRUNCATE Trackers")
 mydb.commit()
 """
 
+
 def main():
-    #create_databases("9/5/2024", "Cash", 100.0, "Food")
-    print(monthly_spend())
+    create_databases("9/5/2024", "Cash", 100.0, "Food")
+    show_data()
+
 
 if __name__ == "__main__":
     main()
-
-
