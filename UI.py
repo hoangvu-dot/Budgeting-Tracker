@@ -65,14 +65,14 @@ with col1:
                 "date": "Date",
                 "payment": "Payment",
                 "cost": "Cost",
-                "reason": "What u spend on",
+                "reason": "Item ",
             },
             hide_index=True,
             use_container_width=True,
         )
 
 with col2:
-    st.subheader(":orange[Stats of Purchased Items]", divider="green")
+    st.subheader(":orange[Spending Purposes]", divider="green")
     with st.container(height=450):
         stats = unique_item()
         data_name = [x for x in stats]
@@ -84,3 +84,6 @@ with col2:
         st.bar_chart(
             bar_chart, x="Item", y="Percentage", use_container_width=True, height=440
         )
+
+with col3:
+    ...

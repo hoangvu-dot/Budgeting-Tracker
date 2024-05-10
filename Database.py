@@ -42,15 +42,15 @@ def monthly_spend() -> int:
 
 
 def unique_item():
-    mycursor.execute("SELECT Product from Trackers")
+    mycursor.execute("SELECT Product, Cost from Trackers")
     item = {}
     for x in mycursor:
         if x[0] not in item:
-            item[x[0]] = 1
+            item[x[0]] = x[1]
         else:
-            item[x[0]] += 1
+            item[x[0]] += x[1]
 
-    number_transaction = len(retrieve_data())
+    number_transaction = monthly_spend()
     for x in item:
         item[x] /= number_transaction
         item[x] *= 100
@@ -70,8 +70,9 @@ mydb.commit()
 
 
 def main():
-    create_databases("9/5/2024", "Cash", 100.0, "Food")
-    show_data()
+    
+
+    ...
 
 
 if __name__ == "__main__":

@@ -9,7 +9,7 @@ class SavingObjects:
         self.product = product
 
     def variables(self):
-        return (self.date, self.payment, self.amount, self.product)
+        return (self.date, self.payment, self.amount, self.product.capitalize())
 
     @property
     def date(self):
