@@ -84,10 +84,12 @@ mydb = mysql.connector.connect(
 mycursor = mydb.cursor()
 
 
-def main():
+def first_run():
     mycursor = mydb.cursor()
-    mycursor.execute("CREATE DATABASE project_database")
-
+    try:
+        mycursor.execute("CREATE DATABASE project_database")
+    except:
+        print("This database has already exist")
 
 if __name__ == "__main__":
-    main()
+    first_run()
