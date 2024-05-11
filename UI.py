@@ -8,11 +8,10 @@ import matplotlib.pyplot as plt
 st.set_page_config(layout="wide")
 
 
-
 with st.sidebar:
     st.title("💵 Budgeting Tracker")
 
-    box_date = st.date_input("What's the date today: ", value= None, format='DD/MM/YYYY')
+    box_date = st.date_input("What's the date today: ", value=None, format="DD/MM/YYYY")
     box_payment = st.text_input("What's the payment method: ")
     box_cost = st.number_input(
         "How much does it cost: ", value=None, placeholder="Type a number..."
@@ -31,8 +30,8 @@ with st.sidebar:
             "Undo",
             on_click=delete_data,
         )
-    st.button("Save & Reset month record", on_click= reset_month)
-    
+    st.button("Save & Reset month record", on_click=reset_month)
+
 
 col1, col2, col3 = st.columns(3, gap="medium")
 with col1:
@@ -84,10 +83,17 @@ with col2:
 
         fig, ax1 = plt.subplots()
         fig.set_figheight(9)
-        ax1.pie(pie_data, autopct='%1.1f%%',startangle=90, textprops = {'color':"white", 'size': 15, 'weight':'bold'})
+        ax1.pie(
+            pie_data,
+            autopct="%1.1f%%",
+            startangle=90,
+            textprops={"color": "white", "size": 15, "weight": "bold"},
+        )
         ax1.axis("equal")
-        ax1.legend(labels,title = "Item",loc= "upper left", bbox_to_anchor=(0, 0, 1.2, 1.2))
-        fig.set_facecolor('lightgrey')  
+        ax1.legend(
+            labels, title="Item", loc="upper left", bbox_to_anchor=(0, 0, 1.2, 1.2)
+        )
+        fig.set_facecolor("lightgrey")
         st.pyplot(fig)
 
 with col3:
@@ -96,12 +102,10 @@ with col3:
         stats = retrieve_data("Month")
         data_name = [x[0] for x in stats]
         data_stats = [x[1] for x in stats]
-        
+
         Df_table = {"Month": data_name, "Total Cost": data_stats}
 
         bar_chart = pd.DataFrame(Df_table)
         st.bar_chart(
             bar_chart, x="Month", y="Total Cost", use_container_width=True, height=440
         )
-
-

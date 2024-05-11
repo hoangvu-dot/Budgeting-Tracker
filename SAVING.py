@@ -1,5 +1,6 @@
 import re
 
+
 class SavingObjects:
     def __init__(self, date, payment, amount, product):
         self.date = date
@@ -55,8 +56,7 @@ def take_value(date, payment, cost, product):
     value = today.variables()
     return value
 
+
 def taking_month(date):
     check = re.search(r"(\d{4})-(\d{2}|\d)-(\d{2}|\d)", date)
     return check[2]
-
-

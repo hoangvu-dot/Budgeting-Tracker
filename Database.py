@@ -57,26 +57,25 @@ def unique_item():
 
     return item
 
+
 def reset_month():
     current_total = monthly_spend()
     current_month = 0
     mycursor.execute("SELECT Date FROM Trackers WHERE id ORDER BY id DESC LIMIT 1")
     for x in mycursor:
-        current_month= taking_month(x[0])
+        current_month = taking_month(x[0])
         break
 
     try:
-        mycursor.execute(
-            "CREATE TABLE Month (month int UNSIGNED, value int UNSIGNED)"
-        )
+        mycursor.execute("CREATE TABLE Month (month int UNSIGNED, value int UNSIGNED)")
     except:
         mycursor.execute(
-            "INSERT INTO Month (month, value) VALUES (%s, %s)", (current_month, current_total)
+            "INSERT INTO Month (month, value) VALUES (%s, %s)",
+            (current_month, current_total),
         )
-    
+
     mycursor.execute("TRUNCATE Trackers")
     mydb.commit()
-
 
 
 mydb = mysql.connector.connect(
@@ -86,7 +85,9 @@ mycursor = mydb.cursor()
 
 
 def main():
-    ...
+    mycursor = mydb.cursor()
+    mycursor.execute("CREATE DATABASE project_database")
+
 
 if __name__ == "__main__":
     main()
