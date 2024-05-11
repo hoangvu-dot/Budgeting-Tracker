@@ -1,0 +1,6 @@
+regex==2024.4.28
+streamlit
+pandas==2.2.2
+streamlit_extras==0.4.2
+matplotlib==3.8.4
+mysql-connector-python==8.4.0
