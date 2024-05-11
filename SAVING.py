@@ -1,6 +1,5 @@
 import re
 
-
 class SavingObjects:
     def __init__(self, date, payment, amount, product):
         self.date = date

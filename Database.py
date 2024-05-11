@@ -1,6 +1,5 @@
 import mysql.connector
 from SAVING import take_value, taking_month
-import numpy as np
 
 
 def create_databases(date, payment, cost, product):
@@ -22,8 +21,9 @@ def show_data():
         print(x)
 
 
-def retrieve_data():
-    mycursor.execute("SELECT * from Trackers")
+def retrieve_data(table):
+    data_from = table
+    mycursor.execute(f"SELECT * from {data_from}")
     lst = [x for x in mycursor]
     return lst
 
@@ -76,6 +76,7 @@ def reset_month():
     
     mycursor.execute("TRUNCATE Trackers")
     mydb.commit()
+
 
 
 mydb = mysql.connector.connect(

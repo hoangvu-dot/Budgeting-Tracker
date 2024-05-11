@@ -1,11 +1,12 @@
 import streamlit as st
 import pandas as pd
-import altair as alt
 import plotly.express as px
 from Database import *
 from streamlit_extras.metric_cards import style_metric_cards
+import matplotlib.pyplot as plt
 
 st.set_page_config(layout="wide")
+
 
 
 with st.sidebar:
@@ -30,7 +31,7 @@ with st.sidebar:
             "Undo",
             on_click=delete_data,
         )
-    st.button("Save & Reset this month record", on_click= reset_month)
+    st.button("Save & Reset month record", on_click= reset_month)
     
 
 col1, col2, col3 = st.columns(3, gap="medium")
@@ -55,10 +56,10 @@ with col1:
         st.markdown(":orange[**Transactions**]")
         df = pd.DataFrame(
             {
-                "date": [x[0] for x in retrieve_data()],
-                "payment": [x[1] for x in retrieve_data()],
-                "cost": [x[2] for x in retrieve_data()],
-                "reason": [x[3] for x in retrieve_data()],
+                "date": [x[0] for x in retrieve_data("Trackers")],
+                "payment": [x[1] for x in retrieve_data("Trackers")],
+                "cost": [x[2] for x in retrieve_data("Trackers")],
+                "reason": [x[3] for x in retrieve_data("Trackers")],
             }
         )
         df_reversed = df[::-1]
@@ -78,15 +79,29 @@ with col2:
     st.subheader(":orange[Spending Purposes]", divider="green")
     with st.container(height=450):
         stats = unique_item()
-        data_name = [x for x in stats]
-        data_stats = [y for x, y in stats.items()]
+        labels = [x for x in stats]
+        pie_data = [y for x, y in stats.items()]
+
+        fig, ax1 = plt.subplots()
+        fig.set_figheight(9)
+        ax1.pie(pie_data, autopct='%1.1f%%',startangle=90, textprops = {'color':"white", 'size': 15, 'weight':'bold'})
+        ax1.axis("equal")
+        ax1.legend(labels,title = "Item",loc= "upper left", bbox_to_anchor=(0, 0, 1.2, 1.2))
+        fig.set_facecolor('lightgrey')  
+        st.pyplot(fig)
+
+with col3:
+    st.subheader(":orange[Monthly Spending]", divider="green")
+    with st.container(height=450):
+        stats = retrieve_data("Month")
+        data_name = [x[0] for x in stats]
+        data_stats = [x[1] for x in stats]
         
-        Df_table = {"Item": data_name, "Percentage": data_stats}
+        Df_table = {"Month": data_name, "Total Cost": data_stats}
 
         bar_chart = pd.DataFrame(Df_table)
         st.bar_chart(
-            bar_chart, x="Item", y="Percentage", use_container_width=True, height=440
+            bar_chart, x="Month", y="Total Cost", use_container_width=True, height=440
         )
 
-with col3:
-    ...
+
