@@ -77,7 +77,7 @@ def reset_month():
     mycursor.execute("TRUNCATE Trackers")
     mydb.commit()
 
-
+#You have to change the "password" based on what you set in your MySQL server
 mydb = mysql.connector.connect(
     host="localhost", user="root", password="root", database="project_database"
 )
